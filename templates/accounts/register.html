@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+
+    <!-- ============================ COMPONENT REGISTER   ================================= -->
+        <div class="card mx-auto" style="max-width:520px; margin-top:40px;">
+          <article class="card-body">
+            {% include 'includes/alerts.html' %}
+            <header class="mb-4"><h4 class="card-title">Sign up</h4></header>
+            <form action="{% url 'register' %}" method="POST" id="post-form">
+                    {% csrf_token %}
+
+                    <div class="form-row">
+                        <div class="col form-group">
+                            <label>First name </label>
+                            {{form.first_name}}
+                            <p id="myText"></p>
+                        </div> <!-- form-group end.// -->
+
+                        <div class="col form-group">
+                            <label>Selected Position </label>
+                            <input type="hidden" id="myVariable" name="myVariable">
+                            <p id="myVariable"></p>
+                        </div> <!-- form-group end.// -->
+
+                        <div class="col form-group">
+                            <label>Last name</label>
+                              {{form.last_name}}
+                        </div> <!-- form-group end.// -->
+                    </div> <!-- form-row end.// -->
+
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label>Email Address</label>
+                           {{form.email}}
+
+                        </div> <!-- form-group end.// -->
+                        <div class="form-group col-md-6">
+                          <label>Phone No</label>
+                           {{form.phone_number}}
+
+                        </div> <!-- form-group end.// -->
+                    </div> <!-- form-row.// -->
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Create password</label>
+                             {{form.password}}
+                        </div> <!-- form-group end.// --> 
+                        <div class="form-group col-md-6">
+                            <label>Repeat password</label>
+                             {{form.confirm_password}}
+                        </div> <!-- form-group end.// -->  
+                    </div>
+                    <div class="form-row">
+                        <!-- {% load static %} -->
+
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <br>
+                            <br>
+                            {% for row in p_images %}
+                            <div class="row no-gutters">
+                                {% for col in row %}
+                                <div class="col-2 no-gutters">
+                                    <!-- {{ forloop.parentloop.counter0  }}-{{ forloop.counter0  }} -->
+                                    <img src="{% static 'images/banners/img/' %}{{ col }}.jpg" alt="img" style="height: 50px; width: 50px;margin:0px 5px;" id="{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}" onclick="onSelect({{ forloop.parentloop.counter0 }}, {{ forloop.counter0 }})">
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div style="padding-bottom: 15px;"></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block"> Register  </button>
+                    </div> <!-- form-group// -->      
+                {{form.email.errors}} 
+                {{form.non_field_errors}}
+                </form>
+            </article><!-- card-body.// -->
+        </div> <!-- card .// -->
+        <p class="text-center mt-4">Have an account? <a href="{% url 'login' %}">Log In</a></p>
+        <br><br>
+    <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
+    
+    
+    </section>
+    <script>
+        var gpwd_set = new Set();
+    
+        function onSelect(r, c) {
+            var res = r.toString() + c.toString();
+            if (gpwd_set.has(res)) {
+                console.log('true');
+                gpwd_set.delete(res);
+                document.getElementById(res).style.border = null;
+            } else {
+                gpwd_set.add(res);
+                document.getElementById(res).style.border = "2px solid red";
+            }
+    
+            console.log(gpwd_set);
+            const arrayName = Array.from(gpwd_set)
+            document.getElementById("myVariable").value = arrayName;
+            document.getElementById('myText').innerHTML="The set value is: "+ arrayName;
+
+        }
+       
+    
+        // Submit post on submit
+        
+    </script>
+    <!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% endblock %}
