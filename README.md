@@ -40,7 +40,7 @@ Install my-project
 
 Activate Envirnoment
 ```bash
-Env/Scripts/activate
+Create env & and Activate Env/Scripts/activate
 ```
 
 Dependencies Install
