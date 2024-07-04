@@ -5,6 +5,10 @@ Data-Extraction-and-NLP
 
 User has to go through three level Auth
 
+1.Add Your email id and password in setting.py
+
+2.django version must be django==5.0.6
+
 ## Screenshots
 
 First Level : Sign up and Graphical Authentication
